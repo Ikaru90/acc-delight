@@ -6,10 +6,10 @@ import * as express from 'express';
 import * as helmet from 'helmet';
 import * as mongoose from 'mongoose';
 import * as logger from 'morgan';
-import { PostRouter } from './router/PostRouter';
+import { RoomRouter } from './router/RoomRouter';
 import { UserRouter } from './router/UserRouter';
 
-const postRouter = new PostRouter();
+const roomRouter = new RoomRouter();
 const userRouter = new UserRouter();
 
 class Server {
@@ -24,7 +24,7 @@ class Server {
 
   // application config
   public config(): void {
-    const MONGO_URI: string = 'mongodb://root:1a2s3d4f@ds115244.mlab.com:15244/delight';
+    const MONGO_URI: string = 'mongodb://root:1a2s3d4f@ds115244.mlab.com:15244/acc_delight';
     mongoose.connect(MONGO_URI || process.env.MONGODB_URI);
 
     // express middleware
@@ -57,7 +57,7 @@ class Server {
     const router: express.Router = express.Router();
 
     this.app.use('/', router);
-    this.app.use('/posts', postRouter.router);
+    this.app.use('/rooms', roomRouter.router);
     this.app.use('/users', userRouter.router);
   }
 }

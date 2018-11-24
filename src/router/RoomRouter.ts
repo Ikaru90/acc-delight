@@ -1,7 +1,7 @@
 import { Request, Response, Router } from 'express';
-import Post from '../models/Post';
+import Room from '../models/Room';
 
-export class PostRouter {
+export class RoomRouter {
   public router: Router;
 
   constructor() {
@@ -9,22 +9,21 @@ export class PostRouter {
     this.routes();
   }
 
-  // get all of the posts in the database
   public all(req: Request, res: Response): void {
-    Post.find()
+    Room.find()
       .then((data) => {
         return res.status(200).json({ data });
       })
       .catch((error) => {
-        return res.json({ error });
+        res.status(500).json({ error });
+        return error;
       });
   }
 
-  // get a single post by params of 'slug'
   public one(req: Request, res: Response): void {
-    const { slug } = req.params;
+    const { name } = req.params;
 
-    Post.findOne({ slug })
+    Room.findOne({ name })
       .then((data) => {
         return res.status(200).json({ data });
       })
@@ -33,27 +32,26 @@ export class PostRouter {
       });
   }
 
-  // create a new post
   public create(req: Request, res: Response): void {
     const {
-      title,
-      slug,
-      content,
-      featuredImage,
-      category,
-      published,
+      isPrivate,
+      isChatRoom,
+      userList,
+      adminList,
+      name,
+      id,
     } = req.body;
 
-    const post = new Post({
-      title,
-      slug,
-      content,
-      featuredImage,
-      category,
-      published,
+    const room = new Room({
+      isPrivate,
+      isChatRoom,
+      userList,
+      adminList,
+      name,
+      id,
     });
 
-    post
+    room
       .save()
       .then((data) => {
         return res.status(201).json({ data });
@@ -63,11 +61,10 @@ export class PostRouter {
       });
   }
 
-  // update post by params of 'slug'
   public update(req: Request, res: Response): void {
-    const { slug } = req.body;
+    const { id } = req.params;
 
-    Post.findOneAndUpdate({ slug }, req.body)
+    Room.findOneAndUpdate({ id }, req.body)
       .then((data) => {
         return res.status(200).json({ data });
       })
@@ -76,11 +73,10 @@ export class PostRouter {
       });
   }
 
-  // delete post by params of 'slug'
   public delete(req: Request, res: Response): void {
-    const { slug } = req.body;
+    const { id } = req.params;
 
-    Post.findOneAndRemove({ slug })
+    Room.findOneAndRemove({ id })
       .then(() => {
         return res.status(204).end();
       })
@@ -89,16 +85,17 @@ export class PostRouter {
       });
   }
 
+  // set up our routes
   public routes() {
     this.router.get('/', this.all);
-    this.router.get('/:slug', this.one);
+    this.router.get('/:id', this.one);
     this.router.post('/', this.create);
-    this.router.put('/:slug', this.update);
-    this.router.delete('/:slug', this.delete);
+    this.router.put('/:id', this.update);
+    this.router.delete('/:id', this.delete);
   }
 }
 
-const postRoutes = new PostRouter();
-postRoutes.routes();
+const roomRoutes = new RoomRouter();
+roomRoutes.routes();
 
-export default postRoutes.router;
+export default roomRoutes.router;

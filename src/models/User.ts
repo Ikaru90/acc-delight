@@ -1,47 +1,45 @@
 import { model, Schema } from 'mongoose';
 
 const UserSchema: Schema = new Schema({
-  createdAt: {
-    type: Date,
-    default: Date.now,
+  id: {
+    type: Number,
+    default: 0,
   },
-  updatedAt: {
-    type: Date,
-    default: Date.now,
-  },
-  firstName: {
+  name: {
     type: String,
-    default: '',
     required: true,
   },
-  lastName: {
+  surname: {
     type: String,
-    default: '',
     required: true,
   },
-  username: {
+  avatarURL: {
     type: String,
     default: '',
-    required: true,
-    unique: true,
-    lowercase: true,
   },
-  email: {
-    type: String,
-    default: '',
-    required: true,
-  },
-  password: {
-    type: String,
-    default: '',
-    required: true,
-  },
-  posts: [
+  // presence object ???
+  chatRoomList: [
     {
       type: Schema.Types.ObjectId,
-      ref: 'Post',
+      ref: 'Room',
     },
   ],
+  newsRoomList: [
+    {
+      type: Schema.Types.ObjectId,
+      ref: 'Room',
+    },
+  ],
+  password: {
+    type: String,
+    default: '1',
+    required: true,
+  },
+  enterpriseId: {
+    type: String,
+    default: '',
+    required: true,
+  },
 });
 
 export default model('User', UserSchema);

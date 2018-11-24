@@ -33,14 +33,26 @@ export class UserRouter {
   }
 
   public create(req: Request, res: Response): void {
-    const { firstName, lastName, username, email, password } = req.body;
+    const {
+      id,
+      name,
+      surname,
+      avatarURL,
+      chatRoomList,
+      newsRoomList,
+      password,
+      enterpriseId
+    } = req.body;
 
     const user = new User({
-      firstName,
-      lastName,
-      username,
-      email,
+      id,
+      name,
+      surname,
+      avatarURL,
+      chatRoomList,
+      newsRoomList,
       password,
+      enterpriseId
     });
 
     user
@@ -54,9 +66,9 @@ export class UserRouter {
   }
 
   public update(req: Request, res: Response): void {
-    const { username } = req.params;
+    const { id } = req.params;
 
-    User.findOneAndUpdate({ username }, req.body)
+    User.findOneAndUpdate({ id }, req.body)
       .then((data) => {
         return res.status(200).json({ data });
       })
@@ -66,9 +78,9 @@ export class UserRouter {
   }
 
   public delete(req: Request, res: Response): void {
-    const { username } = req.params;
+    const { id } = req.params;
 
-    User.findOneAndRemove({ username })
+    User.findOneAndRemove({ id })
       .then(() => {
         return res.status(204).end();
       })
@@ -80,10 +92,10 @@ export class UserRouter {
   // set up our routes
   public routes() {
     this.router.get('/', this.all);
-    this.router.get('/:username', this.one);
+    this.router.get('/:id', this.one);
     this.router.post('/', this.create);
-    this.router.put('/:username', this.update);
-    this.router.delete('/:username', this.delete);
+    this.router.put('/:id', this.update);
+    this.router.delete('/:id', this.delete);
   }
 }
 
