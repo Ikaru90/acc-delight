@@ -4,7 +4,8 @@
   "version": "1.0.0",
   "license": "MIT",
   "scripts": {
-    "server": "tsc && nodemon ./build/index.js",
+    "task:clean": "node ./tasks/clean",
+    "server": "npm run task:clean && tsc && nodemon ./build/index.js",
     "start": "node ./build/index.js",
     "ts:watch": "tsc -w"
   },
@@ -29,6 +30,7 @@
     "@types/node": "8.5.5",
     "nodemon": "1.17.5",
     "tslint": "5.10.0",
-    "typescript": "2.9.1"
+    "typescript": "2.9.1",
+    "rimraf": "^2.6.2"
   }
 }

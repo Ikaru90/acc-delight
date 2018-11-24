@@ -9,10 +9,12 @@ import * as logger from 'morgan';
 import { RoomRouter } from './router/RoomRouter';
 import { UserRouter } from './router/UserRouter';
 import { QuestionRouter } from './router/QuestionRouter';
+import { GroupRouter } from './router/GroupRouter';
 
 const roomRouter = new RoomRouter();
 const userRouter = new UserRouter();
 const questionRouter = new QuestionRouter();
+const groupRouter = new GroupRouter();
 
 class Server {
   // set app to be of type express.Application
@@ -61,6 +63,7 @@ class Server {
     this.app.use('/', router);
     this.app.use('/rooms', roomRouter.router);
     this.app.use('/users', userRouter.router);
+    this.app.use('/groups', groupRouter.router);
     this.app.use('/questions', questionRouter.router);
   }
 }

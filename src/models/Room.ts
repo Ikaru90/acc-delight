@@ -27,7 +27,6 @@ const RoomSchema: Schema = new Schema({
   },
   id: {
     type: Number,
-    default: 0,
     required: true,
   },
 });

@@ -1,7 +1,7 @@
 import { Request, Response, Router } from 'express';
-import User from '../models/User';
+import Group from '../models/Group';
 
-export class UserRouter {
+export class GroupRouter {
   public router: Router;
 
   constructor() {
@@ -10,7 +10,7 @@ export class UserRouter {
   }
 
   public all(req: Request, res: Response): void {
-    User.find()
+    Group.find()
       .then((data) => {
         return res.status(200).json({ data });
       })
@@ -21,9 +21,9 @@ export class UserRouter {
   }
 
   public one(req: Request, res: Response): void {
-    const { enterpriseId } = req.params;
+    const { id } = req.params;
 
-    User.findOne({ enterpriseId })
+    Group.findOne({ id })
       .then((data) => {
         return res.status(200).json({ data });
       })
@@ -34,28 +34,12 @@ export class UserRouter {
 
   public create(req: Request, res: Response): void {
     const {
-      id,
-      name,
-      surname,
-      avatarURL,
-      chatRoomList,
-      newsRoomList,
-      password,
-      enterpriseId,
     } = req.body;
 
-    const user = new User({
-      id,
-      name,
-      surname,
-      avatarURL,
-      chatRoomList,
-      newsRoomList,
-      password,
-      enterpriseId,
+    const group = new Group({
     });
 
-    user
+    group
       .save()
       .then((data) => {
         return res.status(201).json({ data });
@@ -66,9 +50,9 @@ export class UserRouter {
   }
 
   public update(req: Request, res: Response): void {
-    const { enterpriseId } = req.params;
+    const { id } = req.params;
 
-    User.findOneAndUpdate({ enterpriseId }, req.body)
+    Group.findOneAndUpdate({ id }, req.body)
       .then((data) => {
         return res.status(200).json({ data });
       })
@@ -78,25 +62,11 @@ export class UserRouter {
   }
 
   public delete(req: Request, res: Response): void {
-    const { enterpriseId } = req.params;
+    const { id } = req.params;
 
-    User.findOneAndRemove({ enterpriseId })
+    Group.findOneAndRemove({ id })
       .then(() => {
         return res.status(204).end();
-      })
-      .catch((error) => {
-        return res.status(500).json({ error });
-      });
-  }
-  
-  public login(req: Request, res: Response): void {
-    const { enterpriseId, password } = req.body;
-
-    User.find({ enterpriseId, password })
-      .then((data) => {
-        return data.length !== 0
-          ? res.status(200).json({ user: data[0] })
-          : res.status(200).json({ authentication: false });
       })
       .catch((error) => {
         return res.status(500).json({ error });
@@ -106,15 +76,14 @@ export class UserRouter {
   // set up our routes
   public routes() {
     this.router.get('/', this.all);
-    this.router.get('/:enterpriseId', this.one);
-    this.router.post('/login', this.login);
-    this.router.post('/', this.create);
-    this.router.put('/:enterpriseId', this.update);
-    this.router.delete('/:enterpriseId', this.delete);
+    this.router.get('/:id', this.one);
+    this.router.post('/', this.create);   
+    this.router.put('/:id', this.update);
+    this.router.delete('/:id', this.delete);
   }
 }
 
-const userRoutes = new UserRouter();
-userRoutes.routes();
+const groupRoutes = new GroupRouter();
+groupRoutes.routes();
 
-export default userRoutes.router;
+export default groupRoutes.router;
