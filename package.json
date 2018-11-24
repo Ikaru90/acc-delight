@@ -1,5 +1,6 @@
 {
-  "name": "typescript-express-server",
+  "author": "Delight team",
+  "name": "delight-server",
   "version": "1.0.0",
   "license": "MIT",
   "scripts": {

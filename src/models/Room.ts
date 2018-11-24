@@ -23,7 +23,6 @@ const RoomSchema: Schema = new Schema({
   ],
   name: {
     type: String,
-    default: '',
     required: true,
   },
   id: {
