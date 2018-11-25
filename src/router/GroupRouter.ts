@@ -1,5 +1,6 @@
 import { Request, Response, Router } from 'express';
 import Group from '../models/Group';
+import { log } from '../utils/logger';
 
 export class GroupRouter {
   public router: Router;
@@ -10,6 +11,7 @@ export class GroupRouter {
   }
 
   public all(req: Request, res: Response): void {
+    log('Get all groups', null);
     Group.find()
       .then((data) => {
         return res.status(200).json({ data });
@@ -22,6 +24,7 @@ export class GroupRouter {
 
   public one(req: Request, res: Response): void {
     const { id } = req.params;
+    log('Get one group', req.params);
 
     Group.findOne({ id })
       .then((data) => {
@@ -34,9 +37,22 @@ export class GroupRouter {
 
   public create(req: Request, res: Response): void {
     const {
+      id,
+      adminList,
+      newsRoomId,
+      isServiceRoom,
+      chatRoom,
+      info,
     } = req.body;
+    log('Create group', req.body);
 
     const group = new Group({
+      id,
+      adminList,
+      newsRoomId,
+      isServiceRoom,
+      chatRoom,
+      info,
     });
 
     group
@@ -51,6 +67,7 @@ export class GroupRouter {
 
   public update(req: Request, res: Response): void {
     const { id } = req.params;
+    log('Update group', req.params);
 
     Group.findOneAndUpdate({ id }, req.body)
       .then((data) => {
@@ -63,6 +80,7 @@ export class GroupRouter {
 
   public delete(req: Request, res: Response): void {
     const { id } = req.params;
+    log('Delete group', req.params);
 
     Group.findOneAndRemove({ id })
       .then(() => {

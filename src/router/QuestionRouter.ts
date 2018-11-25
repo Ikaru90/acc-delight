@@ -1,5 +1,6 @@
 import { Request, Response, Router } from 'express';
 import Question from '../models/Question';
+import { log } from '../utils/logger';
 
 export class QuestionRouter {
   public router: Router;
@@ -10,6 +11,7 @@ export class QuestionRouter {
   }
 
   public all(req: Request, res: Response): void {
+    log('Get all questions', null);
     Question.find()
       .then((data) => {
         return res.status(200).json({ data });
@@ -22,6 +24,7 @@ export class QuestionRouter {
 
   public one(req: Request, res: Response): void {
     const { id } = req.params;
+    log('Get one question', req.params);
 
     Question.findOne({ id })
       .then((data) => {
@@ -38,6 +41,7 @@ export class QuestionRouter {
       label,
       answer,
     } = req.body;
+    log('Create question', req.body);
 
     const question = new Question({
       type,
@@ -57,6 +61,7 @@ export class QuestionRouter {
 
   public update(req: Request, res: Response): void {
     const { id } = req.params;
+    log('Update question', {...req.params, ...req.body});
 
     Question.findOneAndUpdate({ id }, req.body)
       .then((data) => {
@@ -69,6 +74,7 @@ export class QuestionRouter {
 
   public delete(req: Request, res: Response): void {
     const { id } = req.params;
+    log('Delete question', req.params);
 
     Question.findOneAndRemove({ id })
       .then(() => {

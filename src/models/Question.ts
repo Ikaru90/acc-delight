@@ -1,10 +1,6 @@
 import { model, Schema } from 'mongoose';
 
 const QuestionSchema: Schema = new Schema({
-  id: {
-    type: Number,
-    required: true,
-  },
   type: {
     type: String,
     required: true,

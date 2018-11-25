@@ -1,5 +1,6 @@
 import { Request, Response, Router } from 'express';
 import Room from '../models/Room';
+import { log } from '../utils/logger';
 
 export class RoomRouter {
   public router: Router;
@@ -10,6 +11,7 @@ export class RoomRouter {
   }
 
   public all(req: Request, res: Response): void {
+    log('Get all rooms', null);
     Room.find()
       .then((data) => {
         return res.status(200).json({ data });
@@ -22,6 +24,7 @@ export class RoomRouter {
 
   public one(req: Request, res: Response): void {
     const { name } = req.params;
+    log('Get one room', req.params);
 
     Room.findOne({ name })
       .then((data) => {
@@ -41,6 +44,7 @@ export class RoomRouter {
       name,
       id,
     } = req.body;
+    log('Create room', req.body);
 
     const room = new Room({
       isPrivate,
@@ -63,6 +67,7 @@ export class RoomRouter {
 
   public update(req: Request, res: Response): void {
     const { id } = req.params;
+    log('Update room', req.params);
 
     Room.findOneAndUpdate({ id }, req.body)
       .then((data) => {
@@ -75,6 +80,7 @@ export class RoomRouter {
 
   public delete(req: Request, res: Response): void {
     const { id } = req.params;
+    log('Delete room', req.params);
 
     Room.findOneAndRemove({ id })
       .then(() => {

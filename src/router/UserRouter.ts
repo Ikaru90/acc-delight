@@ -11,7 +11,7 @@ export class UserRouter {
   }
 
   public all(req: Request, res: Response): void {
-    log('ALL', req.body);
+    log('Get all users', null);
     User.find()
       .then((data) => {
         return res.status(200).json({ data });
@@ -24,7 +24,7 @@ export class UserRouter {
 
   public one(req: Request, res: Response): void {
     const { enterpriseId } = req.params;
-    log('ONE', req.params);
+    log('Get one user', req.params);
 
     User.findOne({ enterpriseId })
       .then((data) => {
@@ -46,7 +46,7 @@ export class UserRouter {
       password,
       enterpriseId,
     } = req.body;
-    log('CREATE', req.body);
+    log('Create user', req.body);
 
     const user = new User({
       id,
@@ -71,7 +71,7 @@ export class UserRouter {
 
   public update(req: Request, res: Response): void {
     const { enterpriseId } = req.params;
-    log('UPDATE', req.params);
+    log('Update user', req.params);
 
     User.findOneAndUpdate({ enterpriseId }, req.body)
       .then((data) => {
@@ -84,7 +84,7 @@ export class UserRouter {
 
   public delete(req: Request, res: Response): void {
     const { enterpriseId } = req.params;
-    log('DELETE', req.params);
+    log('Delete user', req.params);
 
     User.findOneAndRemove({ enterpriseId })
       .then(() => {
@@ -97,7 +97,7 @@ export class UserRouter {
   
   public login(req: Request, res: Response): void {
     const { enterpriseId, password } = req.body;
-    log('LOGIN', req.body);
+    log('Login', req.body);
 
     User.find({ enterpriseId, password })
       .then((data) => {
