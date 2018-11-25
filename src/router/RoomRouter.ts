@@ -23,10 +23,10 @@ export class RoomRouter {
   }
 
   public one(req: Request, res: Response): void {
-    const { name } = req.params;
+    const { id } = req.params;
     log('Get one room', req.params);
 
-    Room.findOne({ name })
+    Room.findOne({ _id: id })
       .then((data) => {
         return res.status(200).json({ data });
       })
@@ -69,7 +69,7 @@ export class RoomRouter {
     const { id } = req.params;
     log('Update room', req.params);
 
-    Room.findOneAndUpdate({ id }, req.body)
+    Room.findOneAndUpdate({ _id: id }, req.body)
       .then((data) => {
         return res.status(200).json({ data });
       })
@@ -82,7 +82,7 @@ export class RoomRouter {
     const { id } = req.params;
     log('Delete room', req.params);
 
-    Room.findOneAndRemove({ id })
+    Room.findOneAndRemove({ _id: id })
       .then(() => {
         return res.status(204).end();
       })

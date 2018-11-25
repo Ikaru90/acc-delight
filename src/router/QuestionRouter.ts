@@ -26,7 +26,7 @@ export class QuestionRouter {
     const { id } = req.params;
     log('Get one question', req.params);
 
-    Question.findOne({ id })
+    Question.findOne({ _id: id })
       .then((data) => {
         return res.status(200).json({ data });
       })
@@ -63,7 +63,7 @@ export class QuestionRouter {
     const { id } = req.params;
     log('Update question', {...req.params, ...req.body});
 
-    Question.findOneAndUpdate({ id }, req.body)
+    Question.findOneAndUpdate({ _id: id }, req.body)
       .then((data) => {
         return res.status(200).json({ data });
       })
@@ -76,7 +76,7 @@ export class QuestionRouter {
     const { id } = req.params;
     log('Delete question', req.params);
 
-    Question.findOneAndRemove({ id })
+    Question.findOneAndRemove({ _id: id })
       .then(() => {
         return res.status(204).end();
       })

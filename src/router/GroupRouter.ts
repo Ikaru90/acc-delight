@@ -26,7 +26,7 @@ export class GroupRouter {
     const { id } = req.params;
     log('Get one group', req.params);
 
-    Group.findOne({ id })
+    Group.findOne({ _id: id })
       .then((data) => {
         return res.status(200).json({ data });
       })
@@ -69,7 +69,7 @@ export class GroupRouter {
     const { id } = req.params;
     log('Update group', req.params);
 
-    Group.findOneAndUpdate({ id }, req.body)
+    Group.findOneAndUpdate({ _id: id }, req.body)
       .then((data) => {
         return res.status(200).json({ data });
       })
@@ -82,7 +82,7 @@ export class GroupRouter {
     const { id } = req.params;
     log('Delete group', req.params);
 
-    Group.findOneAndRemove({ id })
+    Group.findOneAndRemove({ _id: id })
       .then(() => {
         return res.status(204).end();
       })

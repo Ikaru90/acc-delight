@@ -25,10 +25,6 @@ const RoomSchema: Schema = new Schema({
     type: String,
     required: true,
   },
-  id: {
-    type: Number,
-    required: true,
-  },
 });
 
 export default model('Room', RoomSchema);

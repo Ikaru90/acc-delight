@@ -1,10 +1,6 @@
 import { model, Schema } from 'mongoose';
 
 const GroupSchema: Schema = new Schema({
-  id: {
-    type: Number,
-    required: true,
-  },
   adminList: [
     {
       type: Schema.Types.ObjectId,

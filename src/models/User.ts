@@ -1,10 +1,6 @@
 import { model, Schema } from 'mongoose';
 
 const UserSchema: Schema = new Schema({
-  id: {
-    type: Number,
-    default: 0,
-  },
   name: {
     type: String,
     required: true,
@@ -17,7 +13,6 @@ const UserSchema: Schema = new Schema({
     type: String,
     default: '',
   },
-  // presence object ???
   chatRoomList: [
     {
       type: Schema.Types.ObjectId,
