@@ -1,5 +1,6 @@
 import { Request, Response, Router } from 'express';
 import User from '../models/User';
+import { log } from '../utils/logger';
 
 export class UserRouter {
   public router: Router;
@@ -10,6 +11,7 @@ export class UserRouter {
   }
 
   public all(req: Request, res: Response): void {
+    log('ALL', req.body);
     User.find()
       .then((data) => {
         return res.status(200).json({ data });
@@ -22,6 +24,7 @@ export class UserRouter {
 
   public one(req: Request, res: Response): void {
     const { enterpriseId } = req.params;
+    log('ONE', req.params);
 
     User.findOne({ enterpriseId })
       .then((data) => {
@@ -43,6 +46,7 @@ export class UserRouter {
       password,
       enterpriseId,
     } = req.body;
+    log('CREATE', req.body);
 
     const user = new User({
       id,
@@ -67,6 +71,7 @@ export class UserRouter {
 
   public update(req: Request, res: Response): void {
     const { enterpriseId } = req.params;
+    log('UPDATE', req.params);
 
     User.findOneAndUpdate({ enterpriseId }, req.body)
       .then((data) => {
@@ -79,6 +84,7 @@ export class UserRouter {
 
   public delete(req: Request, res: Response): void {
     const { enterpriseId } = req.params;
+    log('DELETE', req.params);
 
     User.findOneAndRemove({ enterpriseId })
       .then(() => {
@@ -91,6 +97,7 @@ export class UserRouter {
   
   public login(req: Request, res: Response): void {
     const { enterpriseId, password } = req.body;
+    log('LOGIN', req.body);
 
     User.find({ enterpriseId, password })
       .then((data) => {
